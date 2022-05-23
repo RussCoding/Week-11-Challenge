@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require ("fs");
 //sets up and makes app to represent express server
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3000;
 // gives a path to folder containing our html
 const htmlPath = path.join(__dirname, "/public");
 // accesses all notes saved as JSON objects
@@ -37,8 +37,10 @@ app.post("/api/notes", (req, res) => {
     savedNotes.push(addedNote);
     fs.writeFileSync("./db/db.json", JSON.stringify(savedNotes));
     res.json(savedNotes);
-})
+});
 
 app.listen(port, function() {
     console.log(`Server is now running on port ${port}.`)
-})
+});
+
+module.exports = app;
