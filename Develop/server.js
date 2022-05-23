@@ -32,8 +32,11 @@ app.get('*', (req, res) => {
 app.post("/api/notes", (req, res) => {
     let savedNotes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
     let addedNote = req.body;
+    let noteId = (savedNotes.length).toString();
+    addedNote.id = noteId;
     savedNotes.push(addedNote);
     fs.writeFileSync("./db/db.json", JSON.stringify(savedNotes));
+    res.json(savedNotes);
 })
 
 app.listen(port, function() {
